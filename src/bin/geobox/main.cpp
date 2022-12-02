@@ -47,7 +47,6 @@
 #include <geogram/mesh/mesh_preprocessing.h>
 #include <geogram/mesh/mesh_remesh.h>
 #include <geogram/mesh/mesh_decimate.h>
-#include <geogram/mesh/mesh_tetrahedralize.h>
 #include <geogram/mesh/mesh_topology.h>
 #include <geogram/mesh/mesh_AABB.h>
 #include <geogram/mesh/mesh_baking.h>
@@ -565,17 +564,6 @@ namespace {
 	    }
 
             if(ImGui::BeginMenu("Volume")) {
-                if(ImGui::MenuItem("tet meshing")) {
-                    Command::set_current(
-                "void tet_meshing("
-                "    bool preprocess=true [preprocesses the surface],        "
-                "    bool refine=true     [insert points to improve quality],"
-                "    double quality=1.0   [the smaller - the higher quality],"
-                "    bool verbose=false   [enable tetgen debug messages]     "
-                ") [Fills-in a closed mesh with tets, using tetgen]",
-                         this,&GeoBoxApplication::tet_meshing
-                    );
-                }
                 ImGui::EndMenu();
             }
             
@@ -1346,29 +1334,6 @@ namespace {
 
 	    show_mesh_ = true;
 	}
-
-	
-        void tet_meshing(
-            bool preprocess=true,
-            bool refine=true,
-            double quality=1.0,
-            bool verbose=false
-        ) {
-            if(verbose) {
-                show_console();
-            }
-            hide_mesh();
-            begin();
-            CmdLine::set_arg("dbg:tetgen",verbose);        
-            mesh()->cells.clear();
-            mesh()->vertices.remove_isolated();
-            mesh_tetrahedralize(*mesh(), preprocess, refine, quality);
-            if(mesh()->cells.nb() != 0) {
-                mesh()->cells.compute_borders();
-            }
-            end();
-            show_volume();
-        }
 
         void select_all_vertices() {
             Attribute<bool> v_selection(

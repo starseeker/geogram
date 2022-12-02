@@ -41,18 +41,6 @@ if(GEOGRAM_WITH_LUA)
    aux_source_directories(SOURCES "Source Files\\lua"          lua)
 endif()
 
-if(GEOGRAM_WITH_HLBFGS)
-    aux_source_directories(SOURCES "Source Files\\HLBFGS"       HLBFGS)
-endif()
-
-if(GEOGRAM_WITH_TETGEN)
-    aux_source_directories(SOURCES "Source Files\\tetgen" tetgen)
-endif()
-
-if(GEOGRAM_WITH_TRIANGLE)
-    aux_source_directories(SOURCES "Source Files\\triangle" triangle)
-endif()
-
 add_library(geogram_third_party OBJECT ${SOURCES})
 
 if(ANDROID)

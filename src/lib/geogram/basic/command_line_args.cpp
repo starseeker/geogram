@@ -259,24 +259,7 @@ namespace {
      */
     void import_arg_group_opt() {
         declare_arg_group("opt", "Optimizer fine tuning", ARG_ADVANCED);
-#ifdef GEOGRAM_WITH_HLBFGS
-        declare_arg(
-            "opt:nb_Lloyd_iter", 5,
-            "Number of iterations for Lloyd pre-smoothing"
-        );
-        declare_arg(
-            "opt:nb_Newton_iter", 30,
-            "Number of iterations for Newton-CVT"
-        );
-        declare_arg(
-            "opt:nb_LpCVT_iter", 30,
-            "Number of iterations for LpCVT"
-        );
-        declare_arg(
-            "opt:Newton_m", 7,
-            "Number of evaluations for Hessian approximation"
-        );
-#else
+
         declare_arg(
             "opt:nb_Lloyd_iter", 40,
             "Number of iterations for Lloyd pre-smoothing"
@@ -293,7 +276,6 @@ namespace {
             "opt:Newton_m", 0,
             "Number of evaluations for Hessian approximation"
         );
-#endif	
     }
 
     /**

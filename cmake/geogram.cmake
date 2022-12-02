@@ -39,18 +39,6 @@ else()
    message(STATUS "Configuring build for standalone Geogram (without Vorpaline)")
 endif()
 
-if(GEOGRAM_WITH_HLBFGS)
-   add_definitions(-DGEOGRAM_WITH_HLBFGS)
-endif()
-
-if(GEOGRAM_WITH_TETGEN)
-   add_definitions(-DGEOGRAM_WITH_TETGEN)
-endif()
-
-if(GEOGRAM_WITH_TRIANGLE)
-   add_definitions(-DGEOGRAM_WITH_TRIANGLE)
-endif()
-
 if(GEOGRAM_WITH_LUA)
    add_definitions(-DGEOGRAM_WITH_LUA)
 endif()

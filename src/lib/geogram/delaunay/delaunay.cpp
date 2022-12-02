@@ -46,14 +46,6 @@
 #include <geogram/delaunay/parallel_delaunay_3d.h>
 #endif
 
-#ifdef GEOGRAM_WITH_TETGEN
-#include <geogram/delaunay/delaunay_tetgen.h>
-#endif
-
-#ifdef GEOGRAM_WITH_TRIANGLE
-#include <geogram/delaunay/delaunay_triangle.h>
-#endif
-
 #include <geogram/basic/logger.h>
 #include <geogram/basic/command_line.h>
 #include <geogram/basic/process.h>
@@ -125,14 +117,6 @@ namespace GEO {
     /************************************************************************/
 
     void Delaunay::initialize() {
-
-#ifdef GEOGRAM_WITH_TETGEN
-        geo_register_Delaunay_creator(DelaunayTetgen, "tetgen");
-#endif
-
-#ifdef GEOGRAM_WITH_TRIANGLE
-        geo_register_Delaunay_creator(DelaunayTriangle, "triangle");
-#endif
         
         geo_register_Delaunay_creator(Delaunay3d, "BDEL");
 

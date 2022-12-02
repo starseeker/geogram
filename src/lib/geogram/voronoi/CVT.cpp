@@ -41,7 +41,7 @@
 #include <geogram/voronoi/RVD.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/mesh/mesh_geometry.h>
-#include <geogram/numerics/optimizer.h>
+//#include <geogram/numerics/optimizer.h>
 #include <geogram/basic/progress.h>
 #include <geogram/basic/argused.h>
 #include <geogram/bibliography/bibliography.h>
@@ -272,39 +272,9 @@ namespace GEO {
     void CentroidalVoronoiTesselation::Newton_iterations(
         index_t nb_iter, index_t m
     ) {
-        Optimizer_var optimizer = Optimizer::create("HLBFGS");
-	if(optimizer.is_null()) {
-	    Logger::warn("CVT") << "This geogram was not compiled with HLBFGS"
-				<< " (falling back to Lloyd iterations)"
-				<< std::endl;
 	    Lloyd_iterations(nb_iter);
 	    return;
 	}
-
-        index_t n = index_t(points_.size());
-
-        RVD_->set_check_SR(true);
-
-        if(progress_ != nullptr) {
-            progress_->reset(nb_iter);
-        }
-
-        cur_iter_ = 0;
-        nb_iter_ = nb_iter;
-
-        optimizer->set_epsg(0.0);
-        optimizer->set_epsf(0.0);
-        optimizer->set_epsx(0.0);
-        optimizer->set_newiteration_callback(newiteration_CB);
-        optimizer->set_funcgrad_callback(funcgrad_CB);
-        optimizer->set_N(n);
-        optimizer->set_M(m);
-        optimizer->set_max_iter(nb_iter);
-        optimizer->optimize(points_.data());
-
-        simplex_func_.reset();
-        progress_ = nullptr;
-    }
 
     void CentroidalVoronoiTesselation::constrain_points(double* g) const {
         if(point_is_locked_.size() != 0) {

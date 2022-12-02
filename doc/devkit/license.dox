@@ -53,9 +53,6 @@ Geogram uses the following softwares:
   License: zlib/libpng 
 - [Exact predicates](http://www.cs.cmu.edu/~quake/robust.html)
  (by [Jonathan Shewchuk](http://www.cs.berkeley.edu/~jrs/)) - License: Public Domain
-- [HLBFGS](http://research.microsoft.com/en-us/um/people/yangliu/software/HLBFGS/):
- Numerical optimization (developed by [Yang Liu](http://research.microsoft.com/en-us/um/people/yangliu/)
- during his post-doc at Inria)
 - [LM6](https://www.rocq.inria.fr/gamma/gamma/Membres/CIPD/Loic.Marechal/Research/LM6.html):
  .mesh file format I/O
  (by [Loic Marechal](https://www.rocq.inria.fr/gamma/gamma/Membres/CIPD/Loic.Marechal/Research/About_Me.html)) -
@@ -65,13 +62,6 @@ Geogram uses the following softwares:
 
 Optionally, Geogram can be compiled with additional libraries
   (see \link geogram_compiling "How to compile" \endlink)
-- [TETGEN](http://wias-berlin.de/software/tetgen/): mesh generation
- (by [Hang Si](http://www.wias-berlin.de/~si/)) -
- License: [Affero GPL](http://www.gnu.org/licenses/agpl-3.0.en.html)
- (free for academic use, contact Hang Si for other uses)
-- [TRIANGLE](https://www.cs.cmu.edu/~quake/triangle.html): mesh generation
- (by [Jonathan Shewchuk](http://www.cs.berkeley.edu/~jrs/))
- (free for academic use, contact Jonathan Shewchuk for other uses)
 - [FPG](https://hal.inria.fr/inria-00344297/): Predicate filter generator
   (by Andreas Meyer and [Sylvain Pion](https://www.linkedin.com/in/sylvainpion))
 

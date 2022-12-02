@@ -12,8 +12,6 @@ if(GEOGRAM_WITH_GRAPHICS)
   add_subdirectory(geoshade)
 endif()
 
-add_subdirectory(vorpalite)
-
 # if(GEOGRAM_WITH_VORPALINE) 
 #  add_subdirectory(vorpaline)
 # endif()

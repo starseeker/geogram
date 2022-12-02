@@ -85,14 +85,8 @@ OPTIMIZE=-O2 -g -fopenmp
 # Remove the options that you do not use
 # PDEL:   parallel 3D Delaunay -DGEOGRAM_WITH_PDEL (not implemented yet for MingW)
 # LUA:    Lua language interpreter
-# HLBFGS: non-linear optimizer
-# TETGEN: tetrahedral mesh generator (Hang Si). Note: see license !
-# TRIANGLE: triangle mesh genetator (Jonathan Shewchuk). Note: see license !
 
-OPTIONS=-DGEOGRAM_WITH_LUA \
-	-DGEOGRAM_WITH_HLBFGS \
-        -DGEOGRAM_WITH_TETGEN \
-	-DGEOGRAM_WITH_TRIANGLE
+OPTIONS=-DGEOGRAM_WITH_LUA
 
 COPT=-I\$(SRCDIR)/src/lib -I. \$(EXPORTS) \$(OPTIONS) \$(OPTIMIZE)
 CXXOPT=-I\$(SRCDIR)/src/lib -I. -Wno-deprecated -std=c++11 \$(EXPORTS) \$(OPTIONS) \$(OPTIMIZE)
