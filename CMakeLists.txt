@@ -6,61 +6,46 @@ cmake_minimum_required(VERSION 3.0)
 cmake_policy(SET CMP0048 NEW)
 
 ##############################################################################
-set(VORPALINE_VERSION_RC TRUE)
-set(VORPALINE_VERSION_MAJOR 1)
-set(VORPALINE_VERSION_MINOR 8)
-set(VORPALINE_VERSION_PATCH 3)
+set(GEOGRAM_VERSION_RC TRUE)
+set(GEOGRAM_VERSION_MAJOR 1)
+set(GEOGRAM_VERSION_MINOR 8)
+set(GEOGRAM_VERSION_PATCH 3)
 
-set(VORPALINE_VERSION_PLAIN ${VORPALINE_VERSION_MAJOR}.${VORPALINE_VERSION_MINOR}.${VORPALINE_VERSION_PATCH})
-if(VORPALINE_VERSION_RC)
-   set(VORPALINE_VERSION ${VORPALINE_VERSION_PLAIN}-rc)
+set(GEOGRAM_VERSION_PLAIN ${GEOGRAM_VERSION_MAJOR}.${GEOGRAM_VERSION_MINOR}.${GEOGRAM_VERSION_PATCH})
+if(GEOGRAM_VERSION_RC)
+   set(GEOGRAM_VERSION ${GEOGRAM_VERSION_PLAIN}-rc)
 else()
-   set(VORPALINE_VERSION ${VORPALINE_VERSION_PLAIN})
+   set(GEOGRAM_VERSION ${GEOGRAM_VERSION_PLAIN})
 endif()
 ##############################################################################
 
-# Note: geogram.cmake defines GEOGRAM_WITH_VORPALINE
-# that we could have used instead,
-# but geogram.cmake needs to be included after the project()
-# command, since project() resets CFLAGS and CXXFLAGS.
-
-if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/src/lib/vorpalib)
-   project(Vorpaline VERSION "${VORPALINE_VERSION_PLAIN}")
-else()
-   project(Geogram VERSION "${VORPALINE_VERSION_PLAIN}")
-endif()
+project(Geogram VERSION "${GEOGRAM_VERSION_PLAIN}")
 
 # Optional modules
 # (can be overriden in CMakeOptions.txt)
-
-# Set GEOGRAM_SUB_BUILD if Geogram sources included in buildtree, then
-# VORPALINE_PLATFORM can be set directly in parent CMakeLists.txt
-if(NOT GEOGRAM_SUB_BUILD)
-   option(GEOGRAM_WITH_GRAPHICS "Viewers and geogram_gfx library" ON)
-   option(GEOGRAM_WITH_LEGACY_NUMERICS "Legacy numerical libraries" ON)
-   option(GEOGRAM_WITH_LUA "Built-in LUA interpreter" ON)
-   option(GEOGRAM_LIB_ONLY "Libraries only (no example programs/no viewer)" OFF)
-   option(GEOGRAM_WITH_FPG "Predicate generator (Sylvain Pion's FPG)" OFF)
-   option(GEOGRAM_USE_SYSTEM_GLFW3 "Use the version of GLFW3 installed in the system if found" OFF)
-   option(GEOGRAM_WITH_GARGANTUA "64-bit indices" OFF)
-   include(cmake/geo_detect_platform.cmake)
-endif()
+option(GEOGRAM_WITH_GRAPHICS "Viewers and geogram_gfx library" ON)
+option(GEOGRAM_WITH_LEGACY_NUMERICS "Legacy numerical libraries" ON)
+option(GEOGRAM_WITH_LUA "Built-in LUA interpreter" ON)
+option(GEOGRAM_LIB_ONLY "Libraries only (no example programs/no viewer)" OFF)
+option(GEOGRAM_WITH_FPG "Predicate generator (Sylvain Pion's FPG)" OFF)
+option(GEOGRAM_USE_SYSTEM_GLFW3 "Use the version of GLFW3 installed in the system if found" OFF)
+option(GEOGRAM_WITH_GARGANTUA "64-bit indices" OFF)
+include(cmake/geo_detect_platform.cmake)
 
 include(cmake/geogram.cmake)
 
-
-set(VORPALINE_INCLUDE_SUBPATH geogram${VORPALINE_VERSION_MAJOR})
+set(GEOGRAM_INCLUDE_SUBPATH geogram${GEOGRAM_VERSION_MAJOR})
 
 # Determine the current Build-OS (Build-platform without the compiler info)
-string(REGEX REPLACE "-[^-]+$" "" VORPALINE_OS ${VORPALINE_PLATFORM})
+string(REGEX REPLACE "-[^-]+$" "" GEOGRAM_OS ${GEOGRAM_PLATFORM})
 
 # Determine the current build date
-string(TIMESTAMP VORPALINE_BUILD_DATE "%Y-%m-%d %H:%M:%S")
+string(TIMESTAMP GEOGRAM_BUILD_DATE "%Y-%m-%d %H:%M:%S")
 string(TIMESTAMP YEAR "%Y")
 
 # Determine the current build number
 # This is set by Jenkins in environment variable BUILD_NUMBER
-set(VORPALINE_BUILD_NUMBER $ENV{BUILD_NUMBER})
+set(GEOGRAM_BUILD_NUMBER $ENV{BUILD_NUMBER})
 
 if(GEOGRAM_WITH_GARGANTUA)
   add_definitions(-DGARGANTUA)
@@ -68,19 +53,12 @@ endif()
 
 
 ##############################################################################
-# Get SVN revision info
-
-if(GEOGRAM_WITH_VORPALINE)
-##  set(VORPALINE_SVN_REVISION ${Vorpaline_WC_REVISION})
-endif()
-
-##############################################################################
 # RPATH (where executables find the .so / DLLs)
 # - Enables RPATH support for MACOSX
 # - Makes RPATH of dynamic libraries and executable point to the directory
 #   where libraries are installed.
 
-if(VORPALINE_BUILD_DYNAMIC)
+if(GEOGRAM_BUILD_DYNAMIC)
    set(CMAKE_MACOSX_RPATH 1)
    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 endif()
@@ -104,10 +82,6 @@ add_custom_target(uninstall
 # Geogram/Vorpaline sources
 
 add_subdirectory(src/lib/geogram)
-if(GEOGRAM_WITH_VORPALINE)
-   add_subdirectory(src/lib/vorpalib)
-endif()
-
 add_subdirectory(src/lib/third_party)
 
 if(GEOGRAM_WITH_GRAPHICS)
@@ -118,10 +92,7 @@ if(NOT GEOGRAM_LIB_ONLY)
   add_subdirectory(src/bin)
   add_subdirectory(src/tests)
   add_subdirectory(src/examples)
-  add_subdirectory(tests)
 endif()
-
-add_subdirectory(doc)
 
 ##############################################################################
 # Cleanup from previous builds
@@ -140,20 +111,16 @@ install(FILES cmake/FindGeogram.cmake DESTINATION lib/cmake/modules COMPONENT de
 # Configure CPack
 
 set(CPACK_PACKAGE_NAME ${CMAKE_PROJECT_NAME})
-set(CPACK_SYSTEM_NAME ${VORPALINE_OS})
+set(CPACK_SYSTEM_NAME ${GEOGRAM_OS})
 set(CPACK_PACKAGE_VENDOR "INRIA - ALICE")
 
 
-if(${GEOGRAM_WITH_VORPALINE})
-    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A flexible mesh generator")
-else()
-    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "fast, simple and easy-to-use primitives for geometric programming")
-endif()
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "fast, simple and easy-to-use primitives for geometric programming")
 
-set(CPACK_PACKAGE_VERSION_MAJOR ${VORPALINE_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${VORPALINE_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${VORPALINE_VERSION_PATCH})
-set(CPACK_PACKAGE_VERSION ${VORPALINE_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR ${GEOGRAM_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${GEOGRAM_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${GEOGRAM_VERSION_PATCH})
+set(CPACK_PACKAGE_VERSION ${GEOGRAM_VERSION})
 set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION})
 set(CPACK_COMPONENT_INCLUDE_TOPLEVEL_DIRECTORY true)
 
@@ -196,13 +163,6 @@ set(CPACK_COMPONENT_DOC-DEVKIT-FULL_GROUP "Documentation")
 
 set(CPACK_COMPONENT_DOC-DEVKIT-INTERNAL_DISPLAY_NAME "Vorpaline Internal Developer Kit Documentation")
 set(CPACK_COMPONENT_DOC-DEVKIT-INTERNAL_GROUP "Documentation")
-
-# Copy the helper script to build individual packages to the binary directory
-configure_file(
-    tools/make_package.pl.in
-    make_package.pl
-    @ONLY
-)
 
 # This must always be last!
 include(CPack)

@@ -1,7 +1,7 @@
 # Tetgen (by Hang Si) is currently included by default.
 # Triangle (by Jonathan Shewchuk) is currently included by default.
 
-configure_file(geogram.pc.in ${PROJECT_BINARY_DIR}/geogram${VORPALINE_VERSION_MAJOR}.pc @ONLY)
+configure_file(geogram.pc.in ${PROJECT_BINARY_DIR}/geogram${GEOGRAM_VERSION_MAJOR}.pc @ONLY)
 
 add_subdirectory(third_party)
 
@@ -54,11 +54,11 @@ endif()
 
 
 set_target_properties(geogram PROPERTIES
-                      VERSION ${VORPALINE_VERSION}
-                      SOVERSION ${VORPALINE_VERSION_MAJOR}
+                      VERSION ${GEOGRAM_VERSION}
+                      SOVERSION ${GEOGRAM_VERSION_MAJOR}
 		      FOLDER "GEOGRAM")
 
-if(UNIX AND VORPALINE_BUILD_DYNAMIC)
+if(UNIX AND GEOGRAM_BUILD_DYNAMIC)
     if (ANDROID)
         target_link_libraries(geogram dl)
     else()
@@ -76,7 +76,7 @@ install_devkit_targets(geogram)
 # Install include files for the standard devkit
 install(
     DIRECTORY api
-    DESTINATION include/${VORPALINE_INCLUDE_SUBPATH}/geogram
+    DESTINATION include/${GEOGRAM_INCLUDE_SUBPATH}/geogram
     COMPONENT devkit
     FILES_MATCHING PATTERN *.h
 )
@@ -84,7 +84,7 @@ install(
 # Install include files for the full devkit
 install(
     DIRECTORY .
-    DESTINATION include/${VORPALINE_INCLUDE_SUBPATH}/geogram
+    DESTINATION include/${GEOGRAM_INCLUDE_SUBPATH}/geogram
     COMPONENT devkit-full
     FILES_MATCHING PATTERN *.h
     # Exclude all files related to licensing
@@ -92,7 +92,7 @@ install(
 )
 
 install(
-        FILES "${PROJECT_BINARY_DIR}/geogram${VORPALINE_VERSION_MAJOR}.pc"
+        FILES "${PROJECT_BINARY_DIR}/geogram${GEOGRAM_VERSION_MAJOR}.pc"
         DESTINATION lib${LIB_SUFFIX}/pkgconfig
 )
 

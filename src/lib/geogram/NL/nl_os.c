@@ -255,7 +255,7 @@ NLdll nlOpenDLL(const char* name, NLenum flags) {
     nl_arg_used(flags);
 #ifdef NL_OS_UNIX
     nlError("nlOpenDLL","Was not compiled with dynamic linking enabled");
-    nlError("nlOpenDLL","(see VORPALINE_BUILD_DYNAMIC in CMakeLists.txt)");
+    nlError("nlOpenDLL","(see GEOGRAM_BUILD_DYNAMIC in CMakeLists.txt)");
 #else    
     nlError("nlOpenDLL","Not implemented");
 #endif    

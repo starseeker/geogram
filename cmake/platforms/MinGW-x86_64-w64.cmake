@@ -18,7 +18,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
-set(VORPALINE_ARCH_64 true)
+set(GEOGRAM_ARCH_64 true)
 
 # Link with the loader library
 list(APPEND SYSLIBS dl)
@@ -70,7 +70,7 @@ endif ()
 
 macro(vor_add_executable)
 
-    if(NOT VORPALINE_BUILD_DYNAMIC)
+    if(NOT GEOGRAM_BUILD_DYNAMIC)
         # Create a statically linked executable
         # Link with static libraries
         # ... does not work with NDK 10.d

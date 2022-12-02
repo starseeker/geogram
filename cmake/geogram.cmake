@@ -8,36 +8,24 @@ if(EXISTS ${GEOGRAM_SOURCE_DIR}/CMakeOptions.txt)
    include(${GEOGRAM_SOURCE_DIR}/CMakeOptions.txt)
 endif()
 
-# Make sure that VORPALINE_PLATFORM is defined
-if(NOT VORPALINE_PLATFORM)
+# Make sure that GEOGRAM_PLATFORM is defined
+if(NOT GEOGRAM_PLATFORM)
      if(WIN32)
         message(
            STATUS
            " Using Win-vs-generic (default),\n"
-           " (if need be, use CMake variable VORPALINE_PLATFORM to override)."
+           " (if need be, use CMake variable GEOGRAM_PLATFORM to override)."
         )
-        set(VORPALINE_PLATFORM Win-vs-generic)
+        set(GEOGRAM_PLATFORM Win-vs-generic)
      else()
         message(FATAL_ERROR
-           " CMake variable VORPALINE_PLATFORM is not defined.\n"
+           " CMake variable GEOGRAM_PLATFORM is not defined.\n"
            " Please run configure.{sh,bat} to setup the build tree."
         )
      endif()
 endif()
 
-# Determine whether Geogram is built with Vorpaline
-if(IS_DIRECTORY ${GEOGRAM_SOURCE_DIR}/src/lib/vorpalib)
-   set(GEOGRAM_WITH_VORPALINE ON)
-else()
-   set(GEOGRAM_WITH_VORPALINE OFF)
-endif()
-
-if ("${GEOGRAM_WITH_VORPALINE}" STREQUAL ON)
-   message(STATUS "Configuring build for Geogram + Vorpaline")
-   add_definitions(-DGEOGRAM_WITH_VORPALINE)
-else()
-   message(STATUS "Configuring build for standalone Geogram (without Vorpaline)")
-endif()
+message(STATUS "Configuring build for standalone Geogram (without Vorpaline)")
 
 if(GEOGRAM_WITH_LUA)
    add_definitions(-DGEOGRAM_WITH_LUA)
@@ -50,14 +38,14 @@ endif()
 ##############################################################################
 
 include(${GEOGRAM_SOURCE_DIR}/cmake/utilities.cmake)
-include(${GEOGRAM_SOURCE_DIR}/cmake/platforms/${VORPALINE_PLATFORM}/config.cmake)
+include(${GEOGRAM_SOURCE_DIR}/cmake/platforms/${GEOGRAM_PLATFORM}/config.cmake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Static versus dynamic builds
-if(VORPALINE_BUILD_DYNAMIC)
+if(GEOGRAM_BUILD_DYNAMIC)
     set(BUILD_SHARED_LIBS TRUE)
     # Object files in OBJECT libraries are compiled in static mode, even if
     # BUILD_SHARED_LIBS is true! We must set CMAKE_POSITION_INDEPENDENT_CODE

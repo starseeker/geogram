@@ -22,7 +22,7 @@ set(FULL_WARNINGS
 add_definitions(${FULL_WARNINGS})
 
 # Run the static analyzer
-if(VORPALINE_WITH_CLANGSA)
+if(GEOGRAM_WITH_CLANGSA)
     add_definitions(--analyze)
 endif()
 
@@ -63,7 +63,7 @@ add_flags(CMAKE_CXX_FLAGS -Qunused-arguments -std=c++11 -Wno-c++98-compat)
 
 
 # Profiler compilation flags
-if(VORPALINE_WITH_GPROF)
+if(GEOGRAM_WITH_GPROF)
     message(FATAL_ERROR "Profiling is not (yet) available with clang")
     message(STATUS "Building for code profiling")
     #add_flags(CMAKE_CXX_FLAGS -pg -DPROFILER)
@@ -72,7 +72,7 @@ endif()
 
 
 # Code coverage compilation flags
-if(VORPALINE_WITH_GCOV)
+if(GEOGRAM_WITH_GCOV)
     message(STATUS "Building for coverage analysis")
     add_flags(CMAKE_CXX_FLAGS --coverage)
     add_flags(CMAKE_C_FLAGS --coverage)
@@ -81,17 +81,17 @@ endif()
 
 # Compilation flags for Google's AddressSanitizer
 # These flags can only be specified for dynamic builds
-if(VORPALINE_WITH_ASAN)
-    if(VORPALINE_BUILD_DYNAMIC)
+if(GEOGRAM_WITH_ASAN)
+    if(GEOGRAM_BUILD_DYNAMIC)
         message(STATUS "Building with AddressSanitizer (debug only)")
         add_flags(CMAKE_CXX_FLAGS_DEBUG -fsanitize=address -fno-omit-frame-pointer)
         add_flags(CMAKE_C_FLAGS_DEBUG -fsanitize=address -fno-omit-frame-pointer)
     else()
         message(WARNING "AddressSanitizer can be used with dynamic builds only")
-        set(VORPALINE_WITH_ASAN false)
+        set(GEOGRAM_WITH_ASAN false)
     endif()
 endif()
-if(NOT VORPALINE_WITH_ASAN)
+if(NOT GEOGRAM_WITH_ASAN)
     # Use native GCC stack smash Protection and buffer overflow detection (debug only)
     add_flags(CMAKE_CXX_FLAGS_DEBUG -fstack-protector-all)
     add_flags(CMAKE_C_FLAGS_DEBUG -fstack-protector-all)
@@ -100,12 +100,12 @@ endif()
 
 # Compilation flags for Google's ThreadSanitizer
 # Does not work for the moment: cannot figure out how to link with library libtsan
-if(VORPALINE_WITH_TSAN)
+if(GEOGRAM_WITH_TSAN)
     message(STATUS "Building with ThreadSanitizer (debug only)")
     message(FATAL_ERROR "ThreadSanitizer is not available: cannot figure out how to link with library libtsan")
     add_flags(CMAKE_CXX_FLAGS_DEBUG -fsanitize=thread)
     add_flags(CMAKE_C_FLAGS_DEBUG -fsanitize=thread)
-    if(NOT VORPALINE_BUILD_DYNAMIC)
+    if(NOT GEOGRAM_BUILD_DYNAMIC)
         add_flags(CMAKE_EXE_LINKER_FLAGS -static-libtsan)
     endif()
 endif()
@@ -118,7 +118,7 @@ function(vor_reset_warning_level)
 endfunction()
 
 macro(vor_add_executable)
-    if(NOT VORPALINE_BUILD_DYNAMIC)
+    if(NOT GEOGRAM_BUILD_DYNAMIC)
         # Create a statically linked executable
         # Link with static libraries
         add_flags(CMAKE_CXX_FLAGS -static)
@@ -127,16 +127,16 @@ macro(vor_add_executable)
 
     add_executable(${ARGN})
 
-    if(NOT VORPALINE_BUILD_DYNAMIC AND DEFINED VORPALINE_WITH_DDT)
+    if(NOT GEOGRAM_BUILD_DYNAMIC AND DEFINED GEOGRAM_WITH_DDT)
         # Static builds running with Allinea's DDT must be linked with a
         # special malloc library which replaces the malloc primitives of
         # the Glibc (We must allow multiple definitions)
         add_flags(CMAKE_EXE_LINKER_FLAGS -Wl,--allow-multiple-definition)
 
-        if(VORPALINE_ARCH_64)
-            link_directories(${VORPALINE_WITH_DDT}/lib/64)
+        if(GEOGRAM_ARCH_64)
+            link_directories(${GEOGRAM_WITH_DDT}/lib/64)
         else()
-            link_directories(${VORPALINE_WITH_DDT}/lib/32)
+            link_directories(${GEOGRAM_WITH_DDT}/lib/32)
         endif()
         target_link_libraries(${ARGV0} dmallocthcxx)
     endif()

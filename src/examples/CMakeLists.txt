@@ -5,6 +5,3 @@ if(GEOGRAM_WITH_GRAPHICS)
    add_subdirectory(graphics)
 endif() 
 
-#if(GEOGRAM_WITH_VORPALINE)
-#   add_subdirectory(vorpaline)
-#endif()

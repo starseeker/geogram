@@ -362,7 +362,7 @@ namespace {
                     "With algorithms from:\n"
                     "\n"
                     "* ERC StG GOODSHAPE (ERC-StG-205693) \n"
-                    "* ERC PoC VORPALINE (ERC-PoC-334829) \n"
+                    "* ERC PoC GEOGRAM (ERC-PoC-334829) \n"
                     "\n"
                     "  ...as well as new ones.\n"
                     "\n"

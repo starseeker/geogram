@@ -46,7 +46,7 @@ function(vor_reset_warning_level)
 endfunction()
 
 macro(vor_add_executable)
-    if(NOT VORPALINE_BUILD_DYNAMIC)
+    if(NOT GEOGRAM_BUILD_DYNAMIC)
         # Create a statically linked executable
         # Link with static libraries: temporarily deactivated (causes some errors in link phase)
         #add_flags(CMAKE_CXX_FLAGS -static -static-intel -static-libgcc)

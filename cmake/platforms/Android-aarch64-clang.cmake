@@ -4,7 +4,7 @@
 
 include(${GEOGRAM_SOURCE_DIR}/cmake/platforms/Linux.cmake)
 
-set(VORPALINE_ARCH_64 true)
+set(GEOGRAM_ARCH_64 true)
 
 # No graphics (yet) for Android
 set(GEOGRAM_WITH_GRAPHICS FALSE)
@@ -51,7 +51,7 @@ add_flags(CMAKE_EXE_LINKER_FLAGS ${ARCH_FLAGS} -pie)
 #add_flags(CMAKE_CXX_FLAGS_DEBUG -D_GLIBCXX_DEBUG)
 
 # Profiler compilation flags
-if(VORPALINE_WITH_GPROF)
+if(GEOGRAM_WITH_GPROF)
     message(STATUS "Building for code profiling")
     add_flags(CMAKE_CXX_FLAGS -pg -DPROFILER)
     add_flags(CMAKE_C_FLAGS -pg -DPROFILER)
@@ -59,7 +59,7 @@ endif()
 
 
 # Code coverage compilation flags
-if(VORPALINE_WITH_GCOV)
+if(GEOGRAM_WITH_GCOV)
     message(STATUS "Building for coverage analysis")
     add_flags(CMAKE_CXX_FLAGS --coverage)
     add_flags(CMAKE_C_FLAGS --coverage)
@@ -74,7 +74,7 @@ endfunction()
 
 macro(vor_add_executable)
 
-    if(NOT VORPALINE_BUILD_DYNAMIC)
+    if(NOT GEOGRAM_BUILD_DYNAMIC)
         # Create a statically linked executable
         # Link with static libraries
         # ... does not work with NDK 10.d

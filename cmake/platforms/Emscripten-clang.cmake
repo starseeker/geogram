@@ -46,7 +46,7 @@ add_flags(CMAKE_CXX_FLAGS -std=c++11 -Wno-c++98-compat -Wno-gnu-zero-variadic-ma
 add_definitions(${FULL_WARNINGS})
 
 # Run the static analyzer
-if(VORPALINE_WITH_CLANGSA)
+if(GEOGRAM_WITH_CLANGSA)
     add_definitions(--analyze)
 endif()
 
@@ -76,22 +76,22 @@ set(EM_FLAGS_RELEASE -O3  ${EM_COMMON_FLAGS})
 set(EM_FLAGS_DEBUG -O2 -s ASSERTIONS=2 -s SAFE_HEAP=1 -g ${EM_COMMON_FLAGS})
 
 # Profiler compilation flags
-if(VORPALINE_WITH_GPROF)
+if(GEOGRAM_WITH_GPROF)
     message(FATAL_ERROR "Profiling is not (yet) available with Emscripten")
 endif()
 
 # Code coverage compilation flags
-if(VORPALINE_WITH_GCOV)
+if(GEOGRAM_WITH_GCOV)
     message(FATAL_ERROR "Coverage analysis not supported with Emscripten")
 endif()
 
 # Compilation flags for Google's AddressSanitizer
 # These flags can only be specified for dynamic builds
-if(VORPALINE_WITH_ASAN)
+if(GEOGRAM_WITH_ASAN)
     message(FATAL_ERROR "Address sanitizer not supported with Emscripten")
 endif()
   
-if(NOT VORPALINE_WITH_ASAN)
+if(NOT GEOGRAM_WITH_ASAN)
   # Use native GCC stack smash Protection
   # and buffer overflow detection (debug only)
     add_flags(CMAKE_CXX_FLAGS_DEBUG -fstack-protector-all)
@@ -100,12 +100,12 @@ endif()
 
 
 # Compilation flags for Google's ThreadSanitizer
-if(VORPALINE_WITH_TSAN)
+if(GEOGRAM_WITH_TSAN)
     message(FATAL_ERROR "Thread sanitizer not supported with Emscripten")
 endif()
 
 # Compilation flags for ALinea DDT
-if(VORPALINE_WITH_DDT)
+if(GEOGRAM_WITH_DDT)
     message(FATAL_ERROR "Alinea DDT not supported with Emscripten")  
 endif()  
 

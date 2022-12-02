@@ -65,7 +65,7 @@ if(CMAKE_CXX_COMPILER_LAUNCHER STREQUAL "sccache")
 endif()
 
 # Change flags for static link
-if(VORPALINE_BUILD_DYNAMIC)
+if(GEOGRAM_BUILD_DYNAMIC)
 # remove warning for multiply defined symbols (caused by multiple
 # instanciations of STL templates)
   add_definitions(/wd4251)

@@ -33,8 +33,8 @@ if(UNIX)
 endif()
 
 set_target_properties(geogram_num_3rdparty PROPERTIES
-                      VERSION ${VORPALINE_VERSION}
-                      SOVERSION ${VORPALINE_VERSION_MAJOR}
+                      VERSION ${GEOGRAM_VERSION}
+                      SOVERSION ${GEOGRAM_VERSION_MAJOR}
 		      FOLDER "GEOGRAM")
 
 install_devkit_targets(geogram_num_3rdparty)

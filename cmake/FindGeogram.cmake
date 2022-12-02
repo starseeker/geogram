@@ -115,7 +115,7 @@ if(WIN32)
 
   # Default mode for Windows uses static libraries. Use this variable to
   # link with geogram compiled as DLLs.
-  set(VORPALINE_BUILD_DYNAMIC FALSE CACHE BOOL "Installed Geogram uses DLLs")
+  set(GEOGRAM_BUILD_DYNAMIC FALSE CACHE BOOL "Installed Geogram uses DLLs")
 
   # remove warning for multiply defined symbols (caused by multiple
   # instanciations of STL templates)
@@ -132,7 +132,7 @@ if(WIN32)
   # we want M_PI etc...
   add_definitions(-D_USE_MATH_DEFINES)
 
-  if(NOT VORPALINE_BUILD_DYNAMIC) 
+  if(NOT GEOGRAM_BUILD_DYNAMIC) 
       # If we use static library, we link with the static C++ runtime.
       foreach(config ${CMAKE_CONFIGURATION_TYPES})
          string(TOUPPER ${config} config)

@@ -145,18 +145,6 @@ namespace {
             ARG_ADVANCED
         );
 
-#ifdef GEOGRAM_WITH_VORPALINE	
-        declare_arg(
-            "remesh:sharp_edges", false,
-            "Reconstruct sharp edges", ARG_ADVANCED
-        );
-	
-        declare_arg(
-            "remesh:Nfactor", 5.0,
-            "For sharp_edges", ARG_ADVANCED
-        );
-#endif
-	
         declare_arg(
             "remesh:multi_nerve", true,
             "Insert new vertices to preserve topology",
